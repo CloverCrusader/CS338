@@ -1,3 +1,6 @@
+/* Solves a Diffie-Helman problem given the minimum necessary information.
+Intended for use on small integers ONLY. */
+
 #include <stdio.h>
 
 int p;
