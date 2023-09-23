@@ -1,5 +1,8 @@
 /* Solves a Diffie-Helman problem given the minimum necessary information.
-Intended for use on small integers ONLY. */
+Intended for use on small integers ONLY. 
+compile with $ gcc diffieHelman.c -o diffieHelman.o
+run with $ ./diffieHelman.o
+*/
 
 #include <stdio.h>
 
@@ -34,6 +37,7 @@ int main(int argc, char *args[]) {
     scanf("%i %i %i %i", &p, &q, &remA, &remB);
     int a = findExp(remA);
     int b = findExp(remB);
-    printf("a: %i  b: %i\n", a, b);
+    int k = a^b % p;
+    printf("a: %i  b: %i  shared key: %i\n", a, b, k);
     return 0;
 }
