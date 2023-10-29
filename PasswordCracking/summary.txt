@@ -1,0 +1,72 @@
+Author: Phi Rapacz
+NOTE: I'm sorry this was submitted a few minutes late, I had to re-run the 3rd crack because the first file got over written.
+
+Part 1
+Total time: 213.63 ms
+Hash time: 182.4152 ms
+Crack time: 3.1831 ms
+Number of hashes computed: 267516 
+Passwords cracked: 2734
+Time per hash computed: .000068 ms
+Time per password cracked: .001164 ms
+Passwords cracked per number of hashes computed: 0.01
+
+Part 2
+Total time: 3791.1849 s
+Number of hashes computed: 2176054489
+Passwords cracked: 70
+Time per hash computed: .00174 ms
+Time per password cracked: 50159.8 ms
+Passwords cracked per number of hashes computed: 3.2168E-8
+
+Part 3
+Total time: 480.628271818161 s
+Number of hashes computed: 723450632 
+Passwords cracked: 2734
+Time per hash computed: .0005648 ms
+Time per password cracked: 175.7967 ms
+Passwords cracked per number of hashes computed: 3.7791E-6
+
+Part 4
+(Jeff told us to forget this one)
+
+Analysis:
+- Did your time per hash computed change between phases? By what factor? Why?
+    > Yes.
+        > Phase 1 : Phase 2
+            > ~ 25
+            > The string we're hashing is substantially longer.
+        > Phase 1 : Phase 3
+            > ~ 8
+            > The string we're hashing is slightly longer.
+        > Phase 2 : Phase 3
+            > ~ 1/3 
+            > The string we're hashing is slightly slightly shorter.
+- Did your time per password crack change between phases? By what factor? Why?
+     Yes.
+        > Phase 1 : Phase 2
+            > ~ 50000000
+            > We can't pre-hash all possibilities.
+        > Phase 1 : Phase 3
+            > ~ 175000
+            > We can't pre-hash all possibilities, but there are fewer possibilities than p2.
+        > Phase 2 : Phase 3
+            > ~ 2/7
+            > There are fewer possibilities.
+- Suppose you wanted to precompute all the hashes for each possible password
+so you could just look up the password in a table indexed by the hash. How much
+memory would be required for each phase?
+    > 1 word hash dictionary : 267516 * (32 + 32 + 16) bytes
+        number of possible passwords times what it would take to store each - hash, overhead, and password.
+    > 2 word hash dictionary : 267516^2 * (32 + 32 + 16) bytes
+    > salted hash dictionary : 267516 * 16^8 * (32 + 32 + 16 + 4) bytes
+        the space it would take to store each password is 4 bytes larger due to the salt.
+- How well did hashcat or john do compared to your python program? Give details.
+    > N/A
+- Give 3-4 reasons we should store password hashes and not the passwords themselves.
+Think in terms of threats, who the attackers might be, etc.
+    > Hashes themselves won't get you into the victim's account.
+    > If you're using a good hashing algorithm, then you can't (easily) go backwards
+        from hash to password.
+    > The opportunity to salt and hash adds another level of confundation that wouldn't
+        be possible if only storing the password.
